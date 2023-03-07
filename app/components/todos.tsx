@@ -1,7 +1,7 @@
-
+import styles from './todos.css';
 export default function Todos() {
   return (
-    <form action="post" id="note-form">
+    <form action="post" id="todos-form">
       <p>
         <input type="text" id="title" name="title" placeholder="Title here" required/>
       </p>
@@ -10,4 +10,8 @@ export default function Todos() {
       </p>
     </form>
   )
+}
+
+export function links(){
+  return [{rel:'stylesheet', href: styles}]
 }
