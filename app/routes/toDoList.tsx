@@ -1,6 +1,8 @@
-
+import Todos from "~/components/todos";
 export default function toDoList() {
   return (
-    <div>todolist</div>
+    <main>
+      <Todos />
+    </main>
   )
 }
