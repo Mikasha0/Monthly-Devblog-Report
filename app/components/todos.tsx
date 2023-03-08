@@ -8,6 +8,9 @@ export default function Todos() {
       <p>
         <input type="text" id="title" name="title" placeholder="Write something here..." required/>
       </p>
+      <div className="form-actions">
+        <button>Add Todos</button>
+      </div>
     </form>
   )
 }
