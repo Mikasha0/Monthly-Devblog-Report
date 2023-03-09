@@ -51,3 +51,13 @@
     color: var(--color-primary-300);
     cursor: not-allowed;
   }
+
+  #my-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #my-div h1{
+    font-size:25px;
+    color:#fff;
+  }
