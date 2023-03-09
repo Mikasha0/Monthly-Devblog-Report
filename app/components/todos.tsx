@@ -13,7 +13,10 @@ export default function Todos() {
         <button>Add Todos</button>
       </div>
     </form>
-    <div id="my-div"><h1>My Todos</h1></div>
+    <div id="my-div">
+      <h1>Title Here</h1>
+      <span>Write Your todos here</span>
+    </div>
     </>
   )
 }

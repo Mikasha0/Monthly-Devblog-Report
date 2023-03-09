@@ -56,8 +56,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
   }
   #my-div h1{
     font-size:25px;
     color:#fff;
+  }
+  #my-div span{
+    color: #fff;
   }
