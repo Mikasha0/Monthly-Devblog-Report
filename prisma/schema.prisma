@@ -12,7 +12,7 @@ datasource db {
 
 model Todo {
   id Int @id @default(autoincrement())
-  title String?
-  todos String?
+  title String
+  todos String
   completed Boolean
 }

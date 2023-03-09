@@ -22,6 +22,11 @@ function gettoDoList(){
             title:"Don",
             todos:'i am Don',
             completed: false
+        },
+        {
+            title:"Anime",
+            todos:"My Hero Academia",
+            completed: false
         }
     ]
 }
