@@ -1,6 +1,7 @@
 import styles from './todos.css';
 export default function Todos() {
   return (
+    <>
     <form action="post" id="todos-form">
       <p>
         <input type="text" id="title" name="title" placeholder="Title here" required/>
@@ -12,6 +13,8 @@ export default function Todos() {
         <button>Add Todos</button>
       </div>
     </form>
+    <div id="my-div"><h1>My Todos</h1></div>
+    </>
   )
 }
 
