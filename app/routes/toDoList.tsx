@@ -7,7 +7,12 @@ import { db } from "~/utils/db.server";
 
 export const loader = async () => {
   return json({
-    sandwiches: await db.todo.findMany(),
+    todosItemLists: await db.todo.findMany({
+      take: 5,
+      select: { id: true, title: true },
+      orderBy: { title: "asc" },
+    }
+    )
   });
 };
 export default function ToDoList() {
@@ -28,8 +33,8 @@ export default function ToDoList() {
     </form>
     <div id="my-div">
     <ul>
-      {data.sandwiches.map((sandwich) => (
-        <li key={sandwich.id}>{sandwich.title}</li>
+      {data.todosItemLists.map((todos) => (
+        <li key={todos.id}>{todos.title}</li>
       ))}
     </ul>
     </div>
