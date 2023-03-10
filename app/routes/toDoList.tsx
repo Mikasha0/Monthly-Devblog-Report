@@ -1,6 +1,18 @@
 import homeStyles from '~/styles/home.css';
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import type { Todo } from "@prisma/client";
 
-export default function toDoList() {
+import { db } from "~/utils/db.server";
+
+export const loader = async () => {
+  return json({
+    sandwiches: await db.todo.findMany(),
+  });
+};
+export default function ToDoList() {
+  const data = useLoaderData<typeof loader>();
+
   return (
     <>
     <form action="post" id="todos-form">
@@ -15,8 +27,11 @@ export default function toDoList() {
       </div>
     </form>
     <div id="my-div">
-      <h1>Title</h1>
-      <span>Your Todos here</span>
+    <ul>
+      {data.sandwiches.map((sandwich) => (
+        <li key={sandwich.id}>{sandwich.title}</li>
+      ))}
+    </ul>
     </div>
     </>
   )
