@@ -1,19 +1,6 @@
 import styles from './todos.css';
-import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 
-import { db } from "~/utils/db.server";
 
-type LoaderData = {
-  todoListItems: {title:string; todos:string}[]
-}
-
-export const loader = async () => {
-  const data:LoaderData ={
-    todoListItems: await db.todo.findMany(),
-  };
-  return data;
-};
 
 export default function Todos() {
 
@@ -31,8 +18,7 @@ export default function Todos() {
       </div>
     </form>
     <div id="my-div">
-      {/* <h1>Title Here</h1>
-      <span>Write Your todos here</span> */}
+   
       
     </div>
     </>
