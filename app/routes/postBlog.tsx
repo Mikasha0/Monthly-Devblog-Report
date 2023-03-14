@@ -32,10 +32,6 @@ export const action = async ({ request }: ActionArgs) => {
   
 };
 
-
- 
-
-
 export default function PostBlog() {
   const data = useLoaderData<typeof loader>();
 
@@ -43,10 +39,10 @@ export default function PostBlog() {
     <>
     <form action="post" id="todos-form">
       <p>
-        <input type="text" id="title" name="title" placeholder="Title here" required/>
+        <input type="text" id="title" name="title" placeholder="Author Name" required/>
       </p>
       <p>
-        <input type="text" id="title" name="anything" placeholder="Write something here..." required/>
+        <input type="text" id="title" name="title" placeholder="Title of the Article" required/>
       </p>
       <p>
         <input type="date" id="title" name="sub-date" placeholder="Enter the submission date" required/>
