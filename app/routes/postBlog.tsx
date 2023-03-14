@@ -2,6 +2,8 @@ import homeStyles from '~/styles/home.css';
 import { json, } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import type { ActionArgs } from '@remix-run/node';
+import bootstrapCSS from "bootstrap/dist/css/bootstrap.min.css";
+
 
 import { db } from "~/utils/db.server";
 
@@ -46,17 +48,14 @@ export default function PostBlog() {
       <p>
         <input type="text" id="title" name="anything" placeholder="Write something here..." required/>
       </p>
+      <p>
+        <input type="date" id="title" name="sub-date" placeholder="Enter the submission date" required/>
+      </p>
       <div className="form-actions">
         <button>Add Todos</button>
       </div>
     </form>
-    <div id="my-div">
-    <ul>
-      {data.todosItemLists.map((todos) => (
-        <li key={todos.id}>{todos.title}</li>
-      ))}
-    </ul>
-    </div>
+  
     </>
   )
 }
@@ -65,3 +64,4 @@ export default function PostBlog() {
 export function links(){
   return [{rel:'stylesheet', href: homeStyles}]
 }
+export const link = () => [{ rel: "stylesheet", href: bootstrapCSS }];
