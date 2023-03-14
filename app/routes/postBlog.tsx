@@ -2,22 +2,25 @@ import homeStyles from '~/styles/home.css';
 import type { ActionArgs } from '@remix-run/node';
 import bootstrapCSS from "bootstrap/dist/css/bootstrap.min.css";
 
-
-
-
-
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
-  const title = form.get("title");
-  const todos = form.get("anything");
- 
+  const authorName = form.get("authorName");
+  const blogTitle = form.get("blogTitle");
+  const publishedDate = form.get("publishedDate");
+
   if (
-    typeof title !== "string" ||
-    typeof todos !== "string"
+    typeof authorName !== "string" ||
+    typeof blogTitle !== "string" ||
+    typeof publishedDate !== "string"
   ) {
     throw new Error(`Form not submitted correctly.`);
   }
-  
+
+  // TODO: Create a new blog post using the form data
+
+  return {
+    // TODO: Return a response indicating success or failure
+  };
 };
 
 export default function PostBlog() {
@@ -26,13 +29,13 @@ export default function PostBlog() {
     <>
     <form action="post" id="todos-form">
       <p>
-        <input type="text" id="title" name="title" placeholder="Author Name" required/>
+        <input type="text" name="authorName" placeholder="Author Name" required/>
       </p>
       <p>
-        <input type="text" id="title" name="title" placeholder="Title of the Article" required/>
+        <input type="text" name="blogTitle" placeholder="Title of the Article" required/>
       </p>
       <p>
-        <input type="date" id="title" name="sub-date" placeholder="Enter the submission date" required/>
+        <input type="date" name="publishedDate" placeholder="Enter the submission date" required/>
       </p>
       <div className="form-actions">
         <button>Add Todos</button>
