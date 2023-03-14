@@ -1,88 +1,90 @@
 #content {
-    text-align: center;
-    color: var(--color-primary-10);
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+#cta {
+   margin-top: 2rem;
+}
   
-  #cta {
-    margin-top: 2rem;
-  }
+#cta a {
+  text-decoration: none;
+  background-color: var(--color-secondary-100);
+  color: var(--color-primary-800);
+  padding: 0.5rem 2rem;
+  border-radius: 4px;
+  font-size: 1.5rem;
+}
   
-  #cta a {
-    text-decoration: none;
-    background-color: var(--color-secondary-100);
-    color: var(--color-primary-800);
-    padding: 0.5rem 2rem;
-    border-radius: 4px;
-    font-size: 1.5rem;
-  }
+#cta a:hover {
+  background-color: var(--color-secondary-200);
+}
+#todos-form {
+  max-width: 30rem;
+  margin: 3rem auto;
+  padding: 2rem;
+  border-radius: 6px;
+  background-color: var(--color-primary-100);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+}
   
-  #cta a:hover {
-    background-color: var(--color-secondary-200);
-  }
-  #todos-form {
-    max-width: 30rem;
-    margin: 3rem auto;
-    padding: 2rem;
-    border-radius: 6px;
-    background-color: var(--color-primary-100);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  #todos-form input,
-  #todos-form textarea {
-    display: block;
-    text-align: center;
-  }
+#todos-form input,
+#todos-form textarea {
+  display: block;
+  text-align: center;
+}
 
   
-  #todos-form input,
-  #todos-form textarea {
-    width: 100%;
-    font: inherit;
-    padding: 0.5rem 0.25rem;
-    background-color: #fff;
-    border: none;
-    border-radius: 2px;
-    color: var(--color-primary-800);
-    border-radius: 0.5rem;
-  }
+#todos-form input,
+#todos-form textarea {
+  width: 100%;
+  font: inherit;
+  padding: 0.5rem 0.25rem;
+  background-color: #fff;
+  border: none;
+  border-radius: 2px;
+  color: var(--color-primary-800);
+  border-radius: 0.5rem;
+}
   
-  .form-actions {
-    text-align: center;
-  }
+.form-actions {
+  text-align: center;
+}
   
-  .form-actions button {
-    font: inherit;
-    cursor: pointer;
-    padding: 0.75rem 2rem;
-    border: none;
-    border-radius: 24px;
-    background-color: var(--color-primary-200);
-    color: var(--color-primary-700);
-    font-weight: bold;
-    font-size: 1.05rem;
-  }
+.form-actions button {
+  font: inherit;
+  cursor: pointer;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 24px;
+  background-color: var(--color-primary-200);
+  color: var(--color-primary-700);
+  font-weight: bold;
+  font-size: 1.05rem;
+}
   
-  .form-actions button:hover {
-    background-color: var(--color-primary-200);
-  }
+.form-actions button:hover {
+  background-color: var(--color-primary-200);
+}
   
-  .form-actions button:disabled {
-    background-color: var(--color-primary-200);
-    color: var(--color-primary-300);
-    cursor: not-allowed;
-  }
+.form-actions button:disabled {
+  background-color: var(--color-primary-200);
+  color: var(--color-primary-300);
+  cursor: not-allowed;
+}
 
-  #my-div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  #my-div h1{
-    font-size:25px;
-    color:#fff;
-  }
-  #my-div span{
-    color: #fff;
-  }
+#my-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#my-div h1{
+  font-size:25px;
+  color:#fff;
+}
+#my-div span{
+  color: #fff;
+}
