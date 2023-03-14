@@ -27,9 +27,6 @@ export const action = async ({ request }: ActionArgs) => {
   ) {
     throw new Error(`Form not submitted correctly.`);
   }
-
-  const fields = { title, todo:todos };
-
   
 };
 
