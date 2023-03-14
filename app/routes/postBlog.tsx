@@ -1,22 +1,10 @@
 import homeStyles from '~/styles/home.css';
-import { json, } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 import type { ActionArgs } from '@remix-run/node';
 import bootstrapCSS from "bootstrap/dist/css/bootstrap.min.css";
 
 
-import { db } from "~/utils/db.server";
 
-export const loader = async () => {
-  return json({
-    todosItemLists: await db.todo.findMany({
-      take: 5,
-      select: { id: true, title: true },
-      orderBy: { title: "asc" },
-    }
-    )
-  });
-};
+
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
@@ -33,7 +21,6 @@ export const action = async ({ request }: ActionArgs) => {
 };
 
 export default function PostBlog() {
-  const data = useLoaderData<typeof loader>();
 
   return (
     <>
