@@ -1,5 +1,7 @@
 import homeStyles from '~/styles/home.css';
 import type { ActionArgs } from '@remix-run/node';
+import { db } from "~/utils/db.server";
+
 import bootstrapCSS from "bootstrap/dist/css/bootstrap.min.css";
 
 export const action = async ({ request }: ActionArgs) => {
@@ -16,11 +18,9 @@ export const action = async ({ request }: ActionArgs) => {
     throw new Error(`Form not submitted correctly.`);
   }
 
-  // TODO: Create a new blog post using the form data
+  const fields = {author_name:authorName,blog_title: blogTitle, published_date:publishedDate};
 
-  return {
-    // TODO: Return a response indicating success or failure
-  };
+  const blogs = await db.blog.create({data:fields});
 };
 
 export default function PostBlog() {
@@ -41,7 +41,6 @@ export default function PostBlog() {
         <button>Add Todos</button>
       </div>
     </form>
-  
     </>
   )
 }
