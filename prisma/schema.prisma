@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model blog {
+  id Int @id @default(autoincrement())
+  author_name String
+  blog_title String
+  published_date DateTime?
+}
