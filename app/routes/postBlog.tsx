@@ -1,5 +1,6 @@
 import homeStyles from '~/styles/home.css';
 import type { ActionArgs } from '@remix-run/node';
+import { redirect } from "@remix-run/node";
 import { db } from "~/utils/db.server";
 
 import bootstrapCSS from "bootstrap/dist/css/bootstrap.min.css";
@@ -21,6 +22,8 @@ export const action = async ({ request }: ActionArgs) => {
   const fields = {author_name:authorName,blog_title: blogTitle, published_date:publishedDate};
 
   const blogs = await db.blog.create({data:fields});
+  return redirect(`/Blogs/${blogs.id}`);
+
 };
 
 export default function PostBlog() {

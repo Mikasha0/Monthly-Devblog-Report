@@ -8,7 +8,7 @@ datasource db {
 }
 
 model blog {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   author_name String
   blog_title String
   published_date DateTime?
