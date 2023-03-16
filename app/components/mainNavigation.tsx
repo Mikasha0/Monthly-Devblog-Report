@@ -8,7 +8,7 @@ export default function MainNavigation() {
                 <NavLink to="/">Home</NavLink>
             </li>
             <li className='nav-item'>
-                <NavLink to="/postBlog">PostBlog</NavLink>
+                <NavLink to="/blog">Blog</NavLink>
             </li>
         </ul>
     </nav>
