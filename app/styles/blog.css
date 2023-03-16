@@ -4,23 +4,22 @@
     min-height: inherit;
   }
   
-  .todos-header {
+   .todos-header {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid var(--color-border);
   }
   
   .todos-header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    justify-content: center;
   }
   
   .todos-header .home-link {
-    font-family: var(--font-display);
     font-size: 3rem;
   }
-  
+  /*
   .todos-header .home-link a {
     color: var(--color-foreground);
   }
@@ -90,4 +89,4 @@
       flex-direction: column;
     }
   }
-  
+   */
