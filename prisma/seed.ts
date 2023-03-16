@@ -3,15 +3,14 @@ const db = new PrismaClient();
 
 async function seed(){
     await Promise.all(
-        getJokes().map((todos)=>{
-            return db.blog.create({data:todos});
+        getBlogs().map((blogs)=>{
+            return db.blog.create({data:blogs});
         })
     )
 }
 
 seed();
-function getJokes() {
-    // shout-out to https://icanhazdadjoke.com/
+function getBlogs() {
   
     return [
       {

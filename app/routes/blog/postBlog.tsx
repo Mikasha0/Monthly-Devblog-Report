@@ -21,9 +21,8 @@ export const action = async ({ request }: ActionArgs) => {
 
   const fields = {author_name:authorName,blog_title: blogTitle, published_date:publishedDate};
 
-  const blogs = await db.blog.create({data:fields});
-  return redirect(`/Blogs/${blogs.id}`);
-
+  const blog = await db.blog.create({data:fields});
+  return redirect(`./postBlog/${blog.id}`);
 };
 
 export default function PostBlog() {
