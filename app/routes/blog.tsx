@@ -1,18 +1,24 @@
 import type { LinksFunction } from "@remix-run/node";
 import { Outlet, Link } from "@remix-run/react";
-// import { json } from "@remix-run/node";
-// import { useLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import stylesUrl from "~/styles/blog.css";
-// import { db } from "~/utils/db.server";
+import { db } from "~/utils/db.server";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: stylesUrl }];
 };
 
-
+export const loader = async () => {
+  return json({
+    blogs: await db.blog.findMany({take: 5,
+      select: { id: true,author_name:true },
+      orderBy: { author_name: "asc" },}),
+  });
+};
 
 export default function BlogsRoute() {
-
+  const data = useLoaderData<typeof loader>();
   return (
     <div className="todos-layout">
       <header className="todos-header">
@@ -32,13 +38,13 @@ export default function BlogsRoute() {
         <div className="container">
           <div className="todos-list">
             <h3>Authors At Yarsha Labs</h3>
-            {/* <ul>
-      {data.todos.map((todo) => (
-        <li key={todo.id}>
-          <Link to={todo.id}>{todo.title}</Link>
-        </li>
-      ))}
-    </ul> */}
+            <ul>
+              {data.blogs.map((blog) => (
+              <li key={blog.id}>
+                <Link to={blog.id}>{blog.author_name}</Link>
+                </li>
+                ))}
+            </ul>
             <Link to="postBlog" className="button">
               Add your own
             </Link>

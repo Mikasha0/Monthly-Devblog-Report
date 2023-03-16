@@ -21,7 +21,7 @@ export default function JokeRoute() {
     <div>
       <p>Here's your todo:</p>
       <p>{data.blogs.author_name}</p>
-      <Link to=".">{data.blogs.blog_title} Permalink</Link>
+      <Link to=".">{data.blogs.article_title} Permalink</Link>
     </div>
   );
 }
