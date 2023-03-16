@@ -7,7 +7,7 @@ export default function Index() {
       <h1>Why not use an app to manage your blogs better?</h1>
       <p>Try our early beta and never loose track of your blogs.</p>
       <p id='cta'>
-        <Link to='/postBlog'>Getting Started!</Link>
+        <Link to='/blog'>Getting Started!</Link>
       </p>
     </main>
   );

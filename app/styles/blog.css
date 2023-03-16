@@ -19,15 +19,26 @@
   .todos-header .home-link {
     font-size: 3rem;
   }
-  /*
+  
   .todos-header .home-link a {
-    color: var(--color-foreground);
+    color:#fff;
   }
   
   .todos-header .home-link a:hover {
     text-decoration: none;
   }
+  .todos-main {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    flex: 1 1 100%;
+  }
   
+  .todos-main .container {
+    padding:0 3rem;
+    display: flex;
+    gap: 1rem;
+  }
+  /*
   .todos-header .logo-medium {
     display: none;
   }
@@ -44,16 +55,7 @@
     white-space: nowrap;
   }
   
-  .todos-main {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    flex: 1 1 100%;
-  }
   
-  .todos-main .container {
-    display: flex;
-    gap: 1rem;
-  }
   
   .todos-list {
     max-width: 12rem;
