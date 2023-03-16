@@ -9,11 +9,3 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
-
-model blog{
-  id String @id @default(uuid())
-  author_name String
-  blog_title String
-  published_date DateTime?
-}
-
