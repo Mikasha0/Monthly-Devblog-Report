@@ -48,6 +48,14 @@
   border-radius: 4px;
   font-size: 1rem;
 }
+.todos-main .container .todos-list ul{
+  color:#fff;
+}
+.todos-main .container .todos-list ul li a{
+  color:white;
+  text-decoration: none;
+
+}
   /*
   .todos-header .logo-medium {
     display: none;
