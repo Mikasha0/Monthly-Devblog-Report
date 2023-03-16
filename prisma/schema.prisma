@@ -10,11 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model todo {
+model blog {
   id String @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title String
-  todos String
+  author_name String
+  article_title String
   published_date DateTime?
 }
