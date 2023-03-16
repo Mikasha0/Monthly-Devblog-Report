@@ -40,7 +40,7 @@ export default function PostBlog() {
         <input type="date" name="publishedDate" placeholder="Enter the submission date" required/>
       </p>
       <div className="form-actions">
-        <button>Add Todos</button>
+        <button>Add Info</button>
       </div>
     </form>
     </>

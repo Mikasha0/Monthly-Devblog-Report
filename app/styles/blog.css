@@ -34,8 +34,7 @@
   }
   
   .todos-main .container {
-    padding:0 3rem;
-    display: flex;
+    margin:0 3rem;
     gap: 1rem;
   }
   /*
