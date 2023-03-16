@@ -5,13 +5,13 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 
 export const loader = async ({ params }: LoaderArgs) => {
-  const blogs = await db.blog.findUnique({
+  const todo = await db.blog.findUnique({
     where: { id: params.blogId },
   });
-  if (!blogs) {
+  if (!todo) {
     throw new Error("Joke not found");
   }
-  return json({ blogs });
+  return json({ todo });
 };
 
 export default function JokeRoute() {
@@ -20,9 +20,9 @@ export default function JokeRoute() {
   return (
     <div>
       <p>Here's your todo:</p>
-      <p>{data.blogs.author_name}</p>
-      <p>{data.blogs.published_date}</p>
-      <Link to=".">{data.blogs.article_title} </Link>
+      <p>{data.todo.author_name}</p>
+      <p>{data.todo.published_date}</p>
+      <Link to=".">{data.todo.article_title} Permalink</Link>
     </div>
   );
 }
