@@ -31,7 +31,7 @@ export default function BlogsRoute() {
       <main className="todos-main">
         <div className="container">
           <div className="todos-list">
-            <p>Here are a few more todos to check out:</p>
+            <h3>Authors At Yarsha Labs</h3>
             {/* <ul>
       {data.todos.map((todo) => (
         <li key={todo.id}>

@@ -4,39 +4,50 @@
     min-height: inherit;
   }
   
-   .todos-header {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
+.todos-header {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
   
-  .todos-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    justify-content: center;
-  }
+.todos-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+}
   
-  .todos-header .home-link {
-    font-size: 3rem;
-  }
+.todos-header .home-link {
+  font-size: 3rem;
+}
   
-  .todos-header .home-link a {
-    color:#fff;
-  }
+.todos-header .home-link a {
+  color:#fff;
+}
   
-  .todos-header .home-link a:hover {
-    text-decoration: none;
-  }
-  .todos-main {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    flex: 1 1 100%;
-  }
+.todos-header .home-link a:hover {
+  text-decoration: none;
+}
+.todos-main {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  flex: 1 1 100%;
+}
   
-  .todos-main .container {
-    margin:0 3rem;
-    gap: 1rem;
-  }
+.todos-main .container {
+  margin:0 3rem;
+  gap: 1rem;
+}
+.todos-main .container .todos-list h3{
+  color: var(--color-secondary-200);
+}
+.todos-main .container .todos-list .button{
+  text-decoration: none;
+  background-color: var(--color-secondary-100);
+  color: var(--color-primary-800);
+  padding: 0.5rem 2rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
   /*
   .todos-header .logo-medium {
     display: none;
