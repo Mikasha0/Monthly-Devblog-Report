@@ -19,7 +19,6 @@ export default function BlogRoute() {
 
   return (
     <div>
-      <p>Here's your todo:</p>
       <p>{data.blogs.author_name}</p>
       <p>{data.blogs.published_date}</p>
       <Link to=".">{data.blogs.article_title} Permalink</Link>
