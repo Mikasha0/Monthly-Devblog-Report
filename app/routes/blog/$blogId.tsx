@@ -5,24 +5,24 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 
 export const loader = async ({ params }: LoaderArgs) => {
-  const todo = await db.blog.findUnique({
+  const blogs = await db.blog.findUnique({
     where: { id: params.blogId },
   });
-  if (!todo) {
+  if (!blogs) {
     throw new Error("Joke not found");
   }
-  return json({ todo });
+  return json({ blogs });
 };
 
-export default function JokeRoute() {
+export default function BlogRoute() {
   const data = useLoaderData<typeof loader>();
 
   return (
     <div>
       <p>Here's your todo:</p>
-      <p>{data.todo.author_name}</p>
-      <p>{data.todo.published_date}</p>
-      <Link to=".">{data.todo.article_title} Permalink</Link>
+      <p>{data.blogs.author_name}</p>
+      <p>{data.blogs.published_date}</p>
+      <Link to=".">{data.blogs.article_title} Permalink</Link>
     </div>
   );
 }
