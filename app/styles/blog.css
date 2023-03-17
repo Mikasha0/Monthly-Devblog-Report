@@ -30,12 +30,16 @@
 .todos-main {
   padding-top: 2rem;
   padding-bottom: 2rem;
-  flex: 1 1 100%;
+  display:flex;
+  flex-direction: column;
 }
   
 .todos-main .container {
   margin:0 3rem;
   gap: 1rem;
+}
+.todos-main .container .todos-list{
+  max-width:12rem
 }
 .todos-main .container .todos-list h3{
   color: var(--color-secondary-200);
@@ -55,6 +59,9 @@
   color:white;
   text-decoration: none;
 
+}
+.todos-outlet {
+  flex: 1;
 }
   /*
   .todos-header .logo-medium {
@@ -77,9 +84,7 @@
     max-width: 12rem;
   }
   
-  .todos-outlet {
-    flex: 1;
-  }
+  
   
   .todos-footer {
     padding-top: 2rem;

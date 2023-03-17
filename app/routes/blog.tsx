@@ -13,6 +13,7 @@ export const loader = async () => {
   return json({
     blogs: await db.blog.findMany({take: 5,
       select: { id: true,author_name:true },
+      distinct: ["author_name"],
       orderBy: { author_name: "asc" },}),
   });
 };
@@ -37,7 +38,7 @@ export default function BlogsRoute() {
       <main className="todos-main">
         <div className="container">
           <div className="todos-list">
-            <h3>Authors At Yarsha Labs</h3>
+            <h3>Authors At Yarsa Labs</h3>
             <ul>
               {data.blogs.map((blog) => (
               <li key={blog.id}>
