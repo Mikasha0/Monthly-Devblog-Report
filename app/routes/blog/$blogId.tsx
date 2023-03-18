@@ -69,6 +69,7 @@ export default function BlogRoute() {
             </header>
             <p>Author: {blog.author_name}</p>
             <p>Published Date: {blog.published_date?.slice(0, 10)}</p>
+            <p>bb</p>
           </article>
         </li>
             ))}
