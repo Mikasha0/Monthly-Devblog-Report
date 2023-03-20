@@ -6,6 +6,17 @@ import { db } from "~/utils/db.server";
 import bootstrapCSS from "bootstrap/dist/css/bootstrap.min.css";
 
 export const action = async ({ request }: ActionArgs) => {
+  // Set the cycle duration to 14 days in milliseconds
+  const cycleDuration = 14 * 24 * 60 * 60 * 1000;
+
+  // Use the current time as the start time of the cycle
+  const cycleStartTime = new Date().getTime();
+
+  // Calculate the current cycle based on the elapsed time since the start of the cycle
+  const todayCycle = Math.floor(
+    (new Date().getTime() - cycleStartTime) / cycleDuration
+  ) % 2 + 1;
+
   const form = await request.formData();
   const authorName = form.get("authorName");
   const blogTitle = form.get("blogTitle");
@@ -18,7 +29,7 @@ export const action = async ({ request }: ActionArgs) => {
   const date = new Date(publishDate);
   const formattedDate = date.toISOString();
 
-  const fields = { author_name: authorName, article_title: blogTitle, published_date: formattedDate };
+  const fields = { author_name: authorName, article_title: blogTitle, published_date: formattedDate, currentCycle:todayCycle, };
 
   const blog = await db.blog.create({ data: fields });
   return redirect(`/blog/${blog.id}`);

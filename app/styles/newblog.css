@@ -54,3 +54,11 @@
     text-overflow: ellipsis;
     width: 100%;
   }
+
+  #note-list .blue{
+    background-color:blue;
+  }
+
+  #note-list .red{
+    background-color:red;
+  }
