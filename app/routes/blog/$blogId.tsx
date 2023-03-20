@@ -53,7 +53,6 @@ export default function BlogRoute() {
       </ul>
       {data.otherBlogs.length > 0 && (
         <>
-          <h2 style={{color: 'white'}}>Other Articles by {data.blogs.author_name}</h2>
           <ul id="note-list">
             {data.otherBlogs.map((blog) => (
              
