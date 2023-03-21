@@ -22,9 +22,8 @@ export const loader = async ({ params }: LoaderArgs) => {
 export default function BlogRoute() {
   const data = useLoaderData<typeof loader>();
 
-  const specificDate = new Date("2023/03/19");
   const cycleDuration = 14 * 24 * 60 * 60 * 1000;
-  const cycleStartTime = specificDate.getTime() - cycleDuration;
+  const cycleStartTime = new Date("2023/03/19").getTime();
 
   const currentDate = new Date().toLocaleString("en-US", {
     day: "numeric",
@@ -37,6 +36,8 @@ export default function BlogRoute() {
   const currentCycle =
     (Math.floor((new Date().getTime() - cycleStartTime) / cycleDuration) % 2) +
     1;
+
+  console.log(currentCycle);
 
   return (
     <>

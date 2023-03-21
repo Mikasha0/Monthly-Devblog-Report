@@ -1,35 +1,42 @@
-import homeStyles from '~/styles/home.css';
-import type { ActionArgs } from '@remix-run/node';
+import homeStyles from "~/styles/home.css";
+import type { ActionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { db } from "~/utils/db.server";
 
 import bootstrapCSS from "bootstrap/dist/css/bootstrap.min.css";
 
 export const action = async ({ request }: ActionArgs) => {
-  // Set the cycle duration to 14 days in milliseconds
   const cycleDuration = 14 * 24 * 60 * 60 * 1000;
+  const cycleStartTime = new Date("2023/03/19").getTime();
 
-  // Use the current time as the start time of the cycle
-  const cycleStartTime = new Date().getTime();
-
-  // Calculate the current cycle based on the elapsed time since the start of the cycle
-  const todayCycle = Math.floor(
-    (new Date().getTime() - cycleStartTime) / cycleDuration
-  ) % 2 + 1;
+  const todayCycle =
+    (Math.floor((new Date().getTime() - cycleStartTime) / cycleDuration) % 2) +
+    1;
 
   const form = await request.formData();
   const authorName = form.get("authorName");
   const blogTitle = form.get("blogTitle");
   const publishDate = form.get("publishedDate");
 
-  if (typeof authorName !== "string" || typeof blogTitle !== "string" || typeof publishDate !== "string") {
-    throw new Error(`The form was not submitted correctly. Please make sure that you have filled out all fields with the correct type of value, and try again.`);
+  if (
+    typeof authorName !== "string" ||
+    typeof blogTitle !== "string" ||
+    typeof publishDate !== "string"
+  ) {
+    throw new Error(
+      `The form was not submitted correctly. Please make sure that you have filled out all fields with the correct type of value, and try again.`
+    );
   }
 
   const date = new Date(publishDate);
   const formattedDate = date.toISOString();
 
-  const fields = { author_name: authorName, article_title: blogTitle, published_date: formattedDate, currentCycle:todayCycle, };
+  const fields = {
+    author_name: authorName,
+    article_title: blogTitle,
+    published_date: formattedDate,
+    currentCycle: todayCycle,
+  };
 
   const blog = await db.blog.create({ data: fields });
   return redirect(`/blog/${blog.id}`);
@@ -38,26 +45,40 @@ export const action = async ({ request }: ActionArgs) => {
 export default function PostBlog() {
   return (
     <>
-    <form method="post" id="todos-form">
-      <p>
-        <input type="text" name="authorName" placeholder="Author Name" required/>
-      </p>
-      <p>
-        <input type="text" name="blogTitle" placeholder="Title of the Article" required/>
-      </p>
-      <p>
-        <input type="date" name="publishedDate" placeholder="Enter the submission date" required/>
-      </p>
-      <div className="form-actions">
-        <button>Add Info</button>
-      </div>
-    </form>
+      <form method="post" id="todos-form">
+        <p>
+          <input
+            type="text"
+            name="authorName"
+            placeholder="Author Name"
+            required
+          />
+        </p>
+        <p>
+          <input
+            type="text"
+            name="blogTitle"
+            placeholder="Title of the Article"
+            required
+          />
+        </p>
+        <p>
+          <input
+            type="date"
+            name="publishedDate"
+            placeholder="Enter the submission date"
+            required
+          />
+        </p>
+        <div className="form-actions">
+          <button>Add Info</button>
+        </div>
+      </form>
     </>
-  )
+  );
 }
 
-
-export function links(){
-  return [{rel:'stylesheet', href: homeStyles}]
+export function links() {
+  return [{ rel: "stylesheet", href: homeStyles }];
 }
 export const link = () => [{ rel: "stylesheet", href: bootstrapCSS }];
