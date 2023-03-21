@@ -22,9 +22,9 @@ export const loader = async ({ params }: LoaderArgs) => {
 export default function BlogRoute() {
   const data = useLoaderData<typeof loader>();
 
+  const specificDate = new Date("2023/03/19");
   const cycleDuration = 14 * 24 * 60 * 60 * 1000;
-
-  const cycleStartTime = new Date().getTime();
+  const cycleStartTime = specificDate.getTime() - cycleDuration;
 
   const currentDate = new Date().toLocaleString("en-US", {
     day: "numeric",
@@ -34,16 +34,18 @@ export default function BlogRoute() {
     minute: "2-digit",
   });
 
-  const currentCycle = Math.floor(
-    (new Date().getTime() - cycleStartTime) / cycleDuration
-  ) % 2 + 1;
+  const currentCycle =
+    (Math.floor((new Date().getTime() - cycleStartTime) / cycleDuration) % 2) +
+    1;
 
   return (
     <>
       <ul id="note-list">
         <li
           key={data.blogs.id}
-          className={`note ${currentCycle === data.blogs.currentCycle ? "white" : "blue"}`}
+          className={`note ${
+            currentCycle === data.blogs.currentCycle ? "white" : "blue"
+          }`}
         >
           <article>
             <header>
@@ -66,7 +68,9 @@ export default function BlogRoute() {
             {data.otherBlogs.map((blog) => (
               <li
                 key={blog.id}
-                className={`note ${currentCycle ===blog.currentCycle ? "white" :"blue"}`}
+                className={`note ${
+                  currentCycle === blog.currentCycle ? "white" : "blue"
+                }`}
               >
                 <article>
                   <header>
@@ -93,4 +97,3 @@ export default function BlogRoute() {
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
-
