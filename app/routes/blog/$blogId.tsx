@@ -12,7 +12,6 @@ export const loader = async ({ params }: LoaderArgs) => {
     throw new Error("Blog not found");
   }
 
-  // Fetch other blogs by the same author
   const otherBlogs = await db.blog.findMany({
     where: { author_name: blogs.author_name, id: { not: blogs.id } },
   });
@@ -38,7 +37,6 @@ export default function BlogRoute() {
   const currentCycle = Math.floor(
     (new Date().getTime() - cycleStartTime) / cycleDuration
   ) % 2 + 1;
-  let todayCycle = currentCycle
 
   return (
     <>
@@ -58,7 +56,6 @@ export default function BlogRoute() {
             </header>
             <p>Author: {data.blogs.author_name}</p>
             <p>Published Date: {data.blogs.published_date?.slice(0, 10)}</p>
-            {/* Display the current cycle */}
             <p>Current Cycle: {currentCycle}</p>
           </article>
         </li>
@@ -82,10 +79,8 @@ export default function BlogRoute() {
                   </header>
                   <p>Author: {blog.author_name}</p>
                   <p>Published Date: {blog.published_date?.slice(0, 10)}</p>
-                  {/* Display the current cycle */}
                   <p>Current Cycle: {currentCycle}</p>
                 </article>
-
               </li>
             ))}
           </ul>
