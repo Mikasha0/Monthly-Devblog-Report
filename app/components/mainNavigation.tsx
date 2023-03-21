@@ -10,6 +10,9 @@ export default function MainNavigation() {
             <li className='nav-item'>
                 <NavLink to="/blog">Blog</NavLink>
             </li>
+            <li className='nav-item'>
+                <NavLink to="/monthlyLog">Monthly Log</NavLink>
+            </li>
         </ul>
     </nav>
   )
