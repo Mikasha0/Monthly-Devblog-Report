@@ -3,6 +3,7 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import styles from "~/styles/newBlog.css";
 import { db } from "~/utils/db.server";
+import { useState, useEffect } from "react";
 
 export const loader = async ({ params }: LoaderArgs) => {
   const blogs = await db.blog.findUnique({
@@ -20,11 +21,6 @@ export const loader = async ({ params }: LoaderArgs) => {
 };
 
 export default function BlogRoute() {
-  const data = useLoaderData<typeof loader>();
-
-  const cycleDuration = 14 * 24 * 60 * 60 * 1000;
-  const cycleStartTime = new Date("2023/03/19").getTime();
-
   const currentDate = new Date().toLocaleString("en-US", {
     day: "numeric",
     month: "short",
@@ -32,12 +28,27 @@ export default function BlogRoute() {
     hour: "2-digit",
     minute: "2-digit",
   });
+  const data = useLoaderData<typeof loader>();
+  const [cycleCounter, setCycleCounter] = useState(0);
 
-  const currentCycle =
-    (Math.floor((new Date().getTime() - cycleStartTime) / cycleDuration) % 2) +
-    1;
+  const cycleDuration = 14 * 24 * 60 * 60 * 1000;
+  const [cycleStartTime, setCycleStartTime] = useState(
+    new Date("2023-03-19").getTime()
+  );
 
-  console.log(currentCycle);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const currentTime = new Date().getTime();
+      const elapsedTime = currentTime - cycleStartTime;
+
+      if (elapsedTime >= cycleDuration) {
+        setCycleCounter((prevCounter) => prevCounter + 1);
+        setCycleStartTime(currentTime);
+      }
+    }, cycleDuration);
+
+    return () => clearInterval(intervalId);
+  }, [cycleDuration, cycleStartTime]);
 
   return (
     <>
@@ -45,7 +56,7 @@ export default function BlogRoute() {
         <li
           key={data.blogs.id}
           className={`note ${
-            currentCycle === data.blogs.currentCycle ? "white" : "blue"
+            cycleCounter === data.blogs.currentCycle ? "white" : "blue"
           }`}
         >
           <article>
@@ -59,7 +70,7 @@ export default function BlogRoute() {
             </header>
             <p>Author: {data.blogs.author_name}</p>
             <p>Published Date: {data.blogs.published_date?.slice(0, 10)}</p>
-            <p>Current Cycle: {currentCycle}</p>
+            <p>Current Cycle: {cycleCounter}</p>
           </article>
         </li>
       </ul>
@@ -70,7 +81,7 @@ export default function BlogRoute() {
               <li
                 key={blog.id}
                 className={`note ${
-                  currentCycle === blog.currentCycle ? "white" : "blue"
+                  cycleCounter === blog.currentCycle ? "white" : "blue"
                 }`}
               >
                 <article>
@@ -84,7 +95,7 @@ export default function BlogRoute() {
                   </header>
                   <p>Author: {blog.author_name}</p>
                   <p>Published Date: {blog.published_date?.slice(0, 10)}</p>
-                  <p>Current Cycle: {currentCycle}</p>
+                  <p>Current Cycle: {cycleCounter}</p>
                 </article>
               </li>
             ))}

@@ -6,12 +6,19 @@ import { db } from "~/utils/db.server";
 import bootstrapCSS from "bootstrap/dist/css/bootstrap.min.css";
 
 export const action = async ({ request }: ActionArgs) => {
-  const cycleDuration = 14 * 24 * 60 * 60 * 1000;
-  const cycleStartTime = new Date("2023/03/19").getTime();
+  const cycleDuration = 14 * 24 * 60 * 60 * 1000; // 14 days in milliseconds
+  let cycleStartTime = new Date("2023-03-19").getTime(); // start time in milliseconds
+  let cycleCounter = 0;
 
-  const todayCycle =
-    (Math.floor((new Date().getTime() - cycleStartTime) / cycleDuration) % 2) +
-    1;
+  setInterval(() => {
+    const currentTime = new Date().getTime();
+    const elapsedTime = currentTime - cycleStartTime;
+
+    if (elapsedTime >= cycleDuration) {
+      cycleCounter++;
+      cycleStartTime = currentTime;
+    }
+  }, cycleDuration);
 
   const form = await request.formData();
   const authorName = form.get("authorName");
@@ -35,7 +42,7 @@ export const action = async ({ request }: ActionArgs) => {
     author_name: authorName,
     article_title: blogTitle,
     published_date: formattedDate,
-    currentCycle: todayCycle,
+    currentCycle: cycleCounter,
   };
 
   const blog = await db.blog.create({ data: fields });
