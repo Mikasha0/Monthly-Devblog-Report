@@ -4,8 +4,6 @@ import { redirect } from "@remix-run/node";
 import { db } from "~/utils/db.server";
 import { useState, useEffect } from "react";
 
-import bootstrapCSS from "bootstrap/dist/css/bootstrap.min.css";
-
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
   const authorName = form.get("authorName");
@@ -100,4 +98,3 @@ export default function PostBlog() {
 export function links() {
   return [{ rel: "stylesheet", href: homeStyles }];
 }
-export const link = () => [{ rel: "stylesheet", href: bootstrapCSS }];

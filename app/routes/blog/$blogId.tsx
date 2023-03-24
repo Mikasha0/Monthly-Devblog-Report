@@ -64,7 +64,6 @@ export default function BlogRoute() {
             </header>
             <p>Author: {data.blogs.author_name}</p>
             <p>Published Date: {data.blogs.published_date?.slice(0, 10)}</p>
-            <p>Current Cycle: {cycleCounter}</p>
           </article>
         </li>
       </ul>
@@ -89,7 +88,6 @@ export default function BlogRoute() {
                   </header>
                   <p>Author: {blog.author_name}</p>
                   <p>Published Date: {blog.published_date?.slice(0, 10)}</p>
-                  <p>Current Cycle: {cycleCounter}</p>
                 </article>
               </li>
             ))}
