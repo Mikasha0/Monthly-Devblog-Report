@@ -22,7 +22,7 @@ export const loader = async () => {
         published_date: true,
       },
       orderBy: {
-        currentCycle: "desc",
+        currentIndexID: "asc",
       },
     }),
   });
