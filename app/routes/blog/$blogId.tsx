@@ -29,26 +29,20 @@ export default function BlogRoute() {
     minute: "2-digit",
   });
   const data = useLoaderData<typeof loader>();
+
   const [cycleCounter, setCycleCounter] = useState(0);
 
-  const cycleDuration = 14 * 24 * 60 * 60 * 1000;
-  const [cycleStartTime, setCycleStartTime] = useState(
-    new Date("2023-03-19").getTime()
-  );
-
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const cycleDuration = 14 * 24 * 60 * 60 * 1000;
+    const fixedDate = new Date("2023-03-19");
+    const timerId = setInterval(() => {
       const currentTime = new Date().getTime();
-      const elapsedTime = currentTime - cycleStartTime;
+      const elapsedTime = currentTime - fixedDate.getTime();
+      setCycleCounter(Math.floor(elapsedTime / cycleDuration));
+    }, 100);
 
-      if (elapsedTime >= cycleDuration) {
-        setCycleCounter((prevCounter) => prevCounter + 1);
-        setCycleStartTime(currentTime);
-      }
-    }, cycleDuration);
-
-    return () => clearInterval(intervalId);
-  }, [cycleDuration, cycleStartTime]);
+    return () => clearInterval(timerId);
+  }, []);
 
   return (
     <>
@@ -56,7 +50,7 @@ export default function BlogRoute() {
         <li
           key={data.blogs.id}
           className={`note ${
-            cycleCounter === data.blogs.currentCycle ? "white" : "blue"
+            cycleCounter === data.blogs.currentIndexID ? "white" : "blue"
           }`}
         >
           <article>
@@ -81,7 +75,7 @@ export default function BlogRoute() {
               <li
                 key={blog.id}
                 className={`note ${
-                  cycleCounter === blog.currentCycle ? "white" : "blue"
+                  cycleCounter === blog.currentIndexID ? "white" : "blue"
                 }`}
               >
                 <article>

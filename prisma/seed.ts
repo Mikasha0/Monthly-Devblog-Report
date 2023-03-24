@@ -17,7 +17,7 @@ function gettoDoList(){
             author_name:"Aniket Tamrakar",
             article_title:'Git Aliasing',
             published_date: new Date("2022-12-01").toISOString(),
-            currentCycle :1
+            currentIndexID: 1,
         }
     ]
 }

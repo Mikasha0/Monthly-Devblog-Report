@@ -2,33 +2,22 @@ import homeStyles from "~/styles/home.css";
 import type { ActionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { db } from "~/utils/db.server";
+import { useState, useEffect } from "react";
 
 import bootstrapCSS from "bootstrap/dist/css/bootstrap.min.css";
 
 export const action = async ({ request }: ActionArgs) => {
-  const cycleDuration = 14 * 24 * 60 * 60 * 1000; // 14 days in milliseconds
-  let cycleStartTime = new Date("2023-03-19").getTime(); // start time in milliseconds
-  let cycleCounter = 0;
-
-  setInterval(() => {
-    const currentTime = new Date().getTime();
-    const elapsedTime = currentTime - cycleStartTime;
-
-    if (elapsedTime >= cycleDuration) {
-      cycleCounter++;
-      cycleStartTime = currentTime;
-    }
-  }, cycleDuration);
-
   const form = await request.formData();
   const authorName = form.get("authorName");
   const blogTitle = form.get("blogTitle");
   const publishDate = form.get("publishedDate");
+  const currentID = form.get("currentID");
 
   if (
     typeof authorName !== "string" ||
     typeof blogTitle !== "string" ||
-    typeof publishDate !== "string"
+    typeof publishDate !== "string" ||
+    typeof currentID !== "string"
   ) {
     throw new Error(
       `The form was not submitted correctly. Please make sure that you have filled out all fields with the correct type of value, and try again.`
@@ -42,7 +31,7 @@ export const action = async ({ request }: ActionArgs) => {
     author_name: authorName,
     article_title: blogTitle,
     published_date: formattedDate,
-    currentCycle: cycleCounter,
+    currentIndexID: parseInt(currentID),
   };
 
   const blog = await db.blog.create({ data: fields });
@@ -50,6 +39,19 @@ export const action = async ({ request }: ActionArgs) => {
 };
 
 export default function PostBlog() {
+  const [cycleCounter, setCycleCounter] = useState(0);
+
+  useEffect(() => {
+    const cycleDuration = 14 * 24 * 60 * 60 * 1000;
+    const fixedDate = new Date("2023-03-19");
+    const timerId = setInterval(() => {
+      const currentTime = new Date().getTime();
+      const elapsedTime = currentTime - fixedDate.getTime();
+      setCycleCounter(Math.floor(elapsedTime / cycleDuration));
+    }, 100);
+
+    return () => clearInterval(timerId);
+  }, []);
   return (
     <>
       <form method="post" id="todos-form">
@@ -74,6 +76,16 @@ export default function PostBlog() {
             type="date"
             name="publishedDate"
             placeholder="Enter the submission date"
+            required
+          />
+        </p>
+        <p>
+          <input
+            type="text"
+            name="currentID"
+            placeholder="Enter the submission date"
+            value={cycleCounter}
+            readOnly
             required
           />
         </p>

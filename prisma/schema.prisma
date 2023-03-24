@@ -17,5 +17,5 @@ model blog {
   author_name String
   article_title String
   published_date DateTime?
-  currentCycle Int?
+  currentIndexID Int?
 }
