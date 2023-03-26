@@ -37,7 +37,7 @@ export const action = async ({ request }: ActionArgs) => {
 };
 
 export default function PostBlog() {
-  const [cycleCounter, setCycleCounter] = useState(0);
+  const [cycleCounter, setCycleCounter] = useState(1);
 
   useEffect(() => {
     const cycleDuration = 14 * 24 * 60 * 60 * 1000;
