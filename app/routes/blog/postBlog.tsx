@@ -3,6 +3,20 @@ import type { ActionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { db } from "~/utils/db.server";
 import { useState, useEffect } from "react";
+import { useActionData } from "@remix-run/react";
+import { badRequest } from "~/utils/request.server";
+
+function validateAuthorName(authorName: string) {
+  if (authorName.length < 10) {
+    return `Name is too short.`;
+  }
+}
+
+function validateBlogTitle(blogTitle: string) {
+  if (blogTitle.length < 10) {
+    return `Title too short.`;
+  }
+}
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
@@ -17,10 +31,17 @@ export const action = async ({ request }: ActionArgs) => {
     typeof publishDate !== "string" ||
     typeof currentID !== "string"
   ) {
-    throw new Error(
-      `The form was not submitted correctly. Please make sure that you have filled out all fields with the correct type of value, and try again.`
-    );
+    return badRequest({
+      fieldErrors: null,
+      fields: null,
+      formError: `Form not submitted correctly.`,
+    });
   }
+
+  const fieldErrors = {
+    author_name: validateAuthorName(authorName),
+    content: validateBlogTitle(blogTitle),
+  };
 
   const date = new Date(publishDate);
   const formattedDate = date.toISOString();
@@ -31,6 +52,14 @@ export const action = async ({ request }: ActionArgs) => {
     published_date: formattedDate,
     currentIndexID: parseInt(currentID),
   };
+
+  if (Object.values(fieldErrors).some(Boolean)) {
+    return badRequest({
+      fieldErrors,
+      fields,
+      formError: null,
+    });
+  }
 
   const blog = await db.blog.create({ data: fields });
   return redirect(`/blog/${blog.id}`);
@@ -50,20 +79,40 @@ export default function PostBlog() {
 
     return () => clearInterval(timerId);
   }, []);
+
+  const actionData = useActionData<typeof action>();
   return (
     <>
       <form method="post" id="todos-form">
         <p>
           <input
             type="text"
+            defaultValue={actionData?.fields?.author_name}
             name="authorName"
+            aria-invalid={
+              Boolean(actionData?.fieldErrors?.author_name) || undefined
+            }
+            aria-errormessage={
+              actionData?.fieldErrors?.author_name ? "name-error" : undefined
+            }
             placeholder="Author Name"
             required
           />
         </p>
+        {actionData?.fieldErrors?.author_name ? (
+          <p
+            className="form-validation-error"
+            style={{ color: "red" }}
+            role="alert"
+            id="name-error"
+          >
+            {actionData.fieldErrors.author_name}
+          </p>
+        ) : null}
         <p>
           <input
             type="text"
+            defaultValue={actionData?.fields?.article_title}
             name="blogTitle"
             placeholder="Title of the Article"
             required
