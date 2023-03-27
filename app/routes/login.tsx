@@ -27,10 +27,81 @@ function validateUrl(url: string) {
   if (urls.includes(url)) {
     return url;
   }
-  return "/jokes";
+  return "/blog";
 }
 
+export const action = async ({ request }: ActionArgs) => {
+  const form = await request.formData();
+  const loginType = form.get("loginType");
+  const username = form.get("username");
+  const password = form.get("password");
+  const redirectTo = validateUrl(form.get("redirectTo") || "/blog");
+  if (
+    typeof loginType !== "string" ||
+    typeof username !== "string" ||
+    typeof password !== "string" ||
+    typeof redirectTo !== "string"
+  ) {
+    return badRequest({
+      fieldErrors: null,
+      fields: null,
+      formError: `Form not submitted correctly.`,
+    });
+  }
+  const fields = { loginType, username, password };
+  const fieldErrors = {
+    username: validateUsername(username),
+    password: validatePassword(password),
+  };
+  if (Object.values(fieldErrors).some(Boolean)) {
+    return badRequest({
+      fieldErrors,
+      fields,
+      formError: null,
+    });
+  }
+  switch (loginType) {
+    case "login": {
+      // login to get the user
+      // if there's no user, return the fields and a formError
+      // if there is a user, create their session and redirect to /jokes
+      return badRequest({
+        fieldErrors: null,
+        fields,
+        formError: "Not implemented",
+      });
+    }
+    case "register": {
+      const userExists = await db.user.findFirst({
+        where: { username },
+      });
+      if (userExists) {
+        return badRequest({
+          fieldErrors: null,
+          fields,
+          formError: `User with username ${username} already exists`,
+        });
+      }
+      // create the user
+      // create their session and redirect to /jokes
+      return badRequest({
+        fieldErrors: null,
+        fields,
+        formError: "Not implemented",
+      });
+    }
+    default: {
+      return badRequest({
+        fieldErrors: null,
+        fields,
+        formError: `Login type invalid`,
+      });
+    }
+  }
+};
+
 export default function Login() {
+  const actionData = useActionData<typeof action>();
   const [searchParams] = useSearchParams();
   return (
     <div className="container">
