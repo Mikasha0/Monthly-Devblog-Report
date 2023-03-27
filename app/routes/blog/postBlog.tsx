@@ -40,7 +40,7 @@ export const action = async ({ request }: ActionArgs) => {
 
   const fieldErrors = {
     author_name: validateAuthorName(authorName),
-    content: validateBlogTitle(blogTitle),
+    article_title: validateBlogTitle(blogTitle),
   };
 
   const date = new Date(publishDate);
@@ -114,10 +114,23 @@ export default function PostBlog() {
             type="text"
             defaultValue={actionData?.fields?.article_title}
             name="blogTitle"
+            aria-invalid={
+              Boolean(actionData?.fieldErrors?.article_title) || undefined
+            }
             placeholder="Title of the Article"
             required
           />
         </p>
+        {actionData?.fieldErrors?.article_title ? (
+          <p
+            className="form-validation-error"
+            style={{ color: "red" }}
+            role="alert"
+            id="name-error"
+          >
+            {actionData.fieldErrors.article_title}
+          </p>
+        ) : null}
         <p>
           <input
             type="date"
