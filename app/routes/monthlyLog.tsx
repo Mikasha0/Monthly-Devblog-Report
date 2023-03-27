@@ -6,25 +6,23 @@ const DAYS_AGO = 28;
 
 export const loader = async () => {
   const cutoffDate = new Date("2023/03/19");
+
   cutoffDate.setDate(cutoffDate.getDate() - DAYS_AGO);
-  const endDate = new Date(cutoffDate);
-  endDate.setDate(endDate.getDate() + DAYS_AGO);
 
   return json({
     blogPosts: await db.blog.findMany({
       where: {
-        createdAt: {
+        published_date: {
           gte: cutoffDate,
-          lt: endDate,
         },
       },
       select: {
         author_name: true,
         article_title: true,
-        createdAt: true,
+        published_date: true,
       },
       orderBy: {
-        createdAt: "asc",
+        currentIndexID: "asc",
       },
     }),
   });
@@ -41,10 +39,10 @@ export default function MonthlyLog() {
           <div key={index}>
             <h2 style={{ color: "green" }}>{post.article_title}</h2>
             <p>{post.author_name}</p>
-            {post.createdAt ? (
-              <p>{post.createdAt.toLocaleString().slice(0, 10)}</p>
+            {post.published_date ? (
+              <p>{post.published_date.toLocaleString().slice(0, 10)}</p>
             ) : (
-              <p>No creation date available</p>
+              <p>No published date available</p>
             )}
           </div>
         ))}
