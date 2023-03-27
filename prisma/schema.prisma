@@ -10,10 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  username     String   @unique
+  passwordHash String
+  blogs        blog[]
+}
+
 model blog {
   id String @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  blogId String
+  blog   User     @relation(fields: [blogId], references: [id], onDelete: Cascade)
   author_name String
   article_title String
   published_date DateTime?
