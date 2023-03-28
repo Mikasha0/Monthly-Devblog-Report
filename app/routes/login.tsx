@@ -1,10 +1,10 @@
 import type { ActionArgs, LinksFunction } from "@remix-run/node";
-import { Link, useSearchParams, useActionData } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import { db } from "~/utils/db.server";
-import { badRequest } from "~/utils/request.server";
+import { Link, useActionData, useSearchParams } from "@remix-run/react";
 
 import stylesUrl from "~/styles/login.css";
+import { db } from "~/utils/db.server";
+import { badRequest } from "~/utils/request.server";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
@@ -48,6 +48,7 @@ export const action = async ({ request }: ActionArgs) => {
       formError: `Form not submitted correctly.`,
     });
   }
+
   const fields = { loginType, username, password };
   const fieldErrors = {
     username: validateUsername(username),
@@ -60,6 +61,7 @@ export const action = async ({ request }: ActionArgs) => {
       formError: null,
     });
   }
+
   switch (loginType) {
     case "login": {
       // login to get the user
@@ -120,21 +122,75 @@ export default function Login() {
                 type="radio"
                 name="loginType"
                 value="login"
-                defaultChecked
+                defaultChecked={
+                  !actionData?.fields?.loginType ||
+                  actionData?.fields?.loginType === "login"
+                }
               />{" "}
               Login
             </label>
             <label>
-              <input type="radio" name="loginType" value="register" /> Register
+              <input
+                type="radio"
+                name="loginType"
+                value="register"
+                defaultChecked={actionData?.fields?.loginType === "register"}
+              />{" "}
+              Register
             </label>
           </fieldset>
           <div>
             <label htmlFor="username-input">Username</label>
-            <input type="text" id="username-input" name="username" />
+            <input
+              type="text"
+              id="username-input"
+              name="username"
+              defaultValue={actionData?.fields?.username}
+              aria-invalid={Boolean(actionData?.fieldErrors?.username)}
+              aria-errormessage={
+                actionData?.fieldErrors?.username ? "username-error" : undefined
+              }
+            />
+            {actionData?.fieldErrors?.username ? (
+              <p
+                className="form-validation-error"
+                role="alert"
+                id="username-error"
+                style={{ color: "red" }}
+              >
+                {actionData.fieldErrors.username}
+              </p>
+            ) : null}
           </div>
           <div>
             <label htmlFor="password-input">Password</label>
-            <input id="password-input" name="password" type="password" />
+            <input
+              id="password-input"
+              name="password"
+              type="password"
+              defaultValue={actionData?.fields?.password}
+              aria-invalid={Boolean(actionData?.fieldErrors?.password)}
+              aria-errormessage={
+                actionData?.fieldErrors?.password ? "password-error" : undefined
+              }
+            />
+            {actionData?.fieldErrors?.password ? (
+              <p
+                className="form-validation-error"
+                role="alert"
+                id="password-error"
+                style={{ color: "red" }}
+              >
+                {actionData.fieldErrors.password}
+              </p>
+            ) : null}
+          </div>
+          <div id="form-error-message">
+            {actionData?.formError ? (
+              <p className="form-validation-error" role="alert">
+                {actionData.formError}
+              </p>
+            ) : null}
           </div>
           <button type="submit" className="button">
             Submit
@@ -147,7 +203,7 @@ export default function Login() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/jokes">Jokes</Link>
+            <Link to="/blog">Jokes</Link>
           </li>
         </ul>
       </div>
