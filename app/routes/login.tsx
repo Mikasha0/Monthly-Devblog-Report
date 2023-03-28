@@ -70,7 +70,7 @@ export const action = async ({ request }: ActionArgs) => {
         return badRequest({
           fieldErrors: null,
           fields,
-          formError: `Username/Password combination is incorrect`,
+          formError: `user credential combination is incorrect`,
         });
       }
       return badRequest({
@@ -193,7 +193,11 @@ export default function Login() {
           </div>
           <div id="form-error-message">
             {actionData?.formError ? (
-              <p className="form-validation-error" role="alert">
+              <p
+                className="form-validation-error"
+                role="alert"
+                style={{ color: "red" }}
+              >
                 {actionData.formError}
               </p>
             ) : null}
