@@ -1,5 +1,4 @@
 import type { ActionArgs, LinksFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import { Link, useActionData, useSearchParams } from "@remix-run/react";
 
 import stylesUrl from "~/styles/login.css";
