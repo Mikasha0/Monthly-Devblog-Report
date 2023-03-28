@@ -5,6 +5,7 @@ import { db } from "~/utils/db.server";
 import { useState, useEffect } from "react";
 import { useActionData } from "@remix-run/react";
 import { badRequest } from "~/utils/request.server";
+import { requireUserId } from "~/utils/session.server";
 
 function validateAuthorName(authorName: string) {
   if (authorName.length < 10) {
@@ -19,6 +20,7 @@ function validateBlogTitle(blogTitle: string) {
 }
 
 export const action = async ({ request }: ActionArgs) => {
+  const userId = await requireUserId(request);
   const form = await request.formData();
   const authorName = form.get("authorName");
   const blogTitle = form.get("blogTitle");
@@ -61,7 +63,7 @@ export const action = async ({ request }: ActionArgs) => {
     });
   }
 
-  const blog = await db.blog.create({ data: fields });
+  const blog = await db.blog.create({ data: { ...fields, blogId: userId } });
   return redirect(`/blog/${blog.id}`);
 };
 
