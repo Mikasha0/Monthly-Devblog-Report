@@ -74,11 +74,6 @@ export const action = async ({ request }: ActionArgs) => {
         });
       }
       return createUserSession(user.id, redirectTo);
-      // return badRequest({
-      //   fieldErrors: null,
-      //   fields,
-      //   formError: "Not implemented",
-      // });
     }
     case "register": {
       const userExists = await db.user.findFirst({
@@ -91,8 +86,7 @@ export const action = async ({ request }: ActionArgs) => {
           formError: `User with username ${username} already exists`,
         });
       }
-      // create the user
-      // create their session and redirect to /jokes
+
       return badRequest({
         fieldErrors: null,
         fields,
