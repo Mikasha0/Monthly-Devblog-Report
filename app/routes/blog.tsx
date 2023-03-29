@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderArgs } from "@remix-run/node";
 import { Outlet, Link } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
@@ -10,14 +10,17 @@ export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: stylesUrl }];
 };
 
-export const loader = async () => {
+export const loader = async ({ request }: LoaderArgs) => {
+  const blogListItems = await db.blog.findMany({
+    take: 5,
+    select: { id: true, author_name: true },
+    distinct: ["author_name"],
+    orderBy: { author_name: "asc" },
+  });
+  const user = await getUser(request);
   return json({
-    blogs: await db.blog.findMany({
-      take: 5,
-      select: { id: true, author_name: true },
-      distinct: ["author_name"],
-      orderBy: { author_name: "asc" },
-    }),
+    blogListItems,
+    user,
   });
 };
 
@@ -39,7 +42,7 @@ export default function BlogsRoute() {
           <div className="todos-list">
             <h3>Authors At Yarsa Labs</h3>
             <ul>
-              {data.blogs.map((blog) => (
+              {data.blogListItems.map((blog) => (
                 <li key={blog.id}>
                   <Link to={blog.id}>{blog.author_name}</Link>
                 </li>
