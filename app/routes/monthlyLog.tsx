@@ -2,18 +2,21 @@ import { db } from "~/utils/db.server";
 import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 
-const DAYS_AGO = 28;
+// const DAYS_AGO = 28;
 
 export const loader = async () => {
-  const cutoffDate = new Date("2023/03/19");
+  const startDate = new Date("2023/03/19");
+  let dateAfter28Days = new Date("2023/03/19");
+  dateAfter28Days.setDate(startDate.getDate() + 28);
 
-  cutoffDate.setDate(cutoffDate.getDate() - DAYS_AGO);
+  // cutoffDate.setDate(cutoffDate.getDate() - DAYS_AGO);
 
   return json({
     blogPosts: await db.blog.findMany({
       where: {
-        published_date: {
-          gte: cutoffDate,
+        createdAt: {
+          gte: startDate,
+          lte: dateAfter28Days,
         },
       },
       select: {
