@@ -1,0 +1,32 @@
+
+  .monthly-log {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .monthly-log h1 {
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+  }
+  .monthly-log table {
+    border-collapse: collapse;
+    margin: 2rem 0;
+    width: 80%;
+    max-width: 800px;
+    background-color: white;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  }
+  .monthly-log th,
+  .monthly-log td {
+    padding: 1rem;
+    text-align: left;
+  }
+  .monthly-log th {
+    background-color: #1e90ff;
+    color: white;
+    font-weight: bold;
+  }
+  .monthly-log tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }

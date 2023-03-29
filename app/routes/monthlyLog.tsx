@@ -1,7 +1,12 @@
 import { db } from "~/utils/db.server";
 import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
+import stylesUrl from "~/styles/monthlyLog.css";
+import type { LinksFunction } from "@remix-run/node";
 
+export const links: LinksFunction = () => {
+  return [{ rel: "stylesheet", href: stylesUrl }];
+};
 // const DAYS_AGO = 28;
 
 export const loader = async () => {
@@ -37,18 +42,29 @@ export default function MonthlyLog() {
   return (
     <section className="monthly-log">
       <div className="container">
-        <h1 style={{ color: "white" }}>Below are the monthly log</h1>
-        {data.blogPosts.map((post, index) => (
-          <div key={index}>
-            <h2 style={{ color: "green" }}>{post.article_title}</h2>
-            <p>{post.author_name}</p>
-            {post.published_date ? (
-              <p>{post.published_date.toLocaleString().slice(0, 10)}</p>
-            ) : (
-              <p>No published date available</p>
-            )}
-          </div>
-        ))}
+        <h1>Below are the monthly log</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Published Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.blogPosts.map((post, index) => (
+              <tr key={index}>
+                <td>{post.article_title}</td>
+                <td>{post.author_name}</td>
+                <td>
+                  {post.published_date
+                    ? post.published_date.toLocaleString().slice(0, 10)
+                    : "No published date available"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </section>
   );
