@@ -7,14 +7,11 @@ import type { LinksFunction } from "@remix-run/node";
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: stylesUrl }];
 };
-// const DAYS_AGO = 28;
 
 export const loader = async () => {
   const startDate = new Date("2023/03/19");
   let dateAfter28Days = new Date("2023/03/19");
   dateAfter28Days.setDate(startDate.getDate() + 28);
-
-  // cutoffDate.setDate(cutoffDate.getDate() - DAYS_AGO);
 
   return json({
     blogPosts: await db.blog.findMany({
